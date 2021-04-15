@@ -16,22 +16,22 @@ void *reader(void *params) {
     pthread_t thread_index = pthread_self();
 
     for (int i = 0; i < ITER; ++i) {
-        sem_wait(&readers_counter_access);				 // We will manipulate the readers counter
-        if (readers_count == 0)				// If there are currently no readers (we came first)...
-            sem_wait(&data_access);				// ...requests exclusive access to the resource for readers
+        sem_wait(&readers_counter_access); // requests access to manipulate the counter
+        if (readers_count == 0)	// if there were no readers (we came first)
+            sem_wait(&data_access);	// requests access to the resources
 
-        readers_count++;							 // Note that there is now one more reader
-        sem_post(&readers_counter_access);				 // We are done accessing the number of readers for now
+        readers_count++; // increment counter
+        sem_post(&readers_counter_access); // releases access to the counter
 
         printf("Reader №%llu read about epic person: %llu! Iteration count: %d\n", thread_index, some_data, i);
         sleep(SLEEP_TIME);
 
-        sem_wait(&readers_counter_access);				 // We will manipulate the readers counter
-        readers_count--;							 // We are leaving, there is one less reader
-        if (readers_count == 0)				// If there are no more readers currently reading...
-            sem_post(&data_access);				// ...release exclusive access to the resource
+        sem_wait(&readers_counter_access); // requests access to manipulate the counter
+        readers_count--; // we are done, so decrement the number of readers
+        if (readers_count == 0)	// if there are no more readers
+            sem_post(&data_access);	// releases access to the resources
 
-        sem_post(&readers_counter_access);				 // We are done accessing the number of readers for now
+        sem_post(&readers_counter_access); // releases access to the counter
     }
 }
 
@@ -39,13 +39,13 @@ void *writer(void *params) {
     pthread_t thread_index = pthread_self();
 
     for (int i = 0; i < ITER; ++i) {
-        sem_wait(&data_access);					// Request exclusive access to the resource
+        sem_wait(&data_access);	// requests access to the resources
 
         printf("Writer №%llu writes himself in history! Iteration count: %d\n", thread_index, i);
-        some_data = thread_index;
+        some_data = thread_index; // changes something in shared resources
 
         sleep(SLEEP_TIME);
-        sem_post(&data_access);					// Release exclusive access to the resource
+        sem_post(&data_access);	// releases access to the resources
     }
 }
 
@@ -55,7 +55,7 @@ int main() {
 
     sem_init(&data_access, 0, 1);
     sem_init(&readers_counter_access, 0, 1);
-
+    // creating threads
     for (auto &i: threadWR)
         pthread_create(&i, nullptr, writer, nullptr);
     for (auto &i: threadRE)
