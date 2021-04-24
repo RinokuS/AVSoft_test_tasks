@@ -3,13 +3,12 @@ project(Task2)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Tell cmake where Qt is located
-set(Qt5_DIR "/Users/rinokus/Documents/Projects/CoDiM-management-tool/Src/venv/lib/python3.7/site-packages/PyQt5/Qt")
+set(CMAKE_AUTOMOC ON)
 
 # Tell cmake to find the modules Qt5Core and Qt5widgets
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
-add_executable(Task2 main.cpp xml_reader.h enterprise_division.h employee.h)
+add_executable(Task2 main.cpp xml_reader.h enterprise_division.h employee.h tree_model.h views/main_window.h views/main_window.cpp views/division_editor.h views/division_editor.cpp views/employee_editor.h views/employee_editor.cpp)
 
 # Link the library to the executable
 target_link_libraries(Task2 Qt5::Core Qt5::Widgets)

@@ -1,14 +1,13 @@
 #include <QApplication>
-#include <QPushButton>
 
 #include "xml_reader.h"
-
-class main_view {
-
-};
+#include "views/main_window.h"
 
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
 
-    return app.exec();
+    auto main_v = main_window();
+    main_v.show();
+
+    return QApplication::exec();
 }

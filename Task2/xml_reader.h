@@ -13,8 +13,7 @@ private:
 public:
     explicit xml_reader(const QString &file_path) {
         this->file = new QFile(file_path);
-
-        if (!file->open(QIODevice::ReadOnly | QIODevice::Text));
+        file->open(QIODevice::ReadOnly | QIODevice::Text);
 
         this->xml = new QXmlStreamReader(this->file);
     }
@@ -24,16 +23,19 @@ public:
         delete xml;
     }
 
+    /*
+     * Simple xml reading method
+     * Working only with provided file pattern :)
+     */
     std::vector<enterprise_division> read_xml() {
         std::vector<enterprise_division> divisions;
 
         while (!xml->atEnd()) {
             xml->readNext();
-
+            // trying to find department element or employment element start
             if (xml->name().toString() == "department" && xml->tokenString() == "StartElement") {
                 if (!xml->attributes().empty() && xml->attributes()[0].name().toString() == "name")
                     divisions.emplace_back(xml->attributes()[0].value().toString().toStdString());
-                else;
             } else if (xml->name().toString() == "employment" && xml->tokenString() == "StartElement") {
                 std::string surname, name, mn, function;
                 unsigned int salary;
@@ -43,7 +45,7 @@ public:
                     xml->readNext();
                     if (att_counter == 5)
                         break; // stop iteration if we have all 5 attributes
-
+                    // reading attributes
                     if (xml->tokenString() == "StartElement") {
                         QString n = xml->name().toString();
                         xml->readNext();

@@ -47,6 +47,7 @@
 					<Add option="-DQT_CORE_LIB"/>
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_GUI_LIB"/>
+					<Add directory="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Task2_autogen/include"/>
 					<Add directory="/Users/rinokus/opt/anaconda3/include/qt"/>
 					<Add directory="/Users/rinokus/opt/anaconda3/include/qt/QtCore"/>
 					<Add directory="/Users/rinokus/opt/anaconda3/./mkspecs/macx-clang"/>
@@ -77,6 +78,7 @@
 					<Add option="-DQT_CORE_LIB"/>
 					<Add option="-DQT_WIDGETS_LIB"/>
 					<Add option="-DQT_GUI_LIB"/>
+					<Add directory="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Task2_autogen/include"/>
 					<Add directory="/Users/rinokus/opt/anaconda3/include/qt"/>
 					<Add directory="/Users/rinokus/opt/anaconda3/include/qt/QtCore"/>
 					<Add directory="/Users/rinokus/opt/anaconda3/./mkspecs/macx-clang"/>
@@ -97,7 +99,20 @@
 					<DistClean command="/usr/bin/make -j16 -f &quot;/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="Task2_autogen">
+				<Option working_dir="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Makefile&quot;  VERBOSE=1 Task2_autogen"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 		</Build>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/cmake-build-debug/Task2_autogen/mocs_compilation.cpp">
+			<Option target="Task2"/>
+		</Unit>
 		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/employee.h">
 			<Option target="Task2"/>
 		</Unit>
@@ -105,6 +120,27 @@
 			<Option target="Task2"/>
 		</Unit>
 		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/main.cpp">
+			<Option target="Task2"/>
+		</Unit>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/tree_model.h">
+			<Option target="Task2"/>
+		</Unit>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/views/division_editor.cpp">
+			<Option target="Task2"/>
+		</Unit>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/views/division_editor.h">
+			<Option target="Task2"/>
+		</Unit>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/views/employee_editor.cpp">
+			<Option target="Task2"/>
+		</Unit>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/views/employee_editor.h">
+			<Option target="Task2"/>
+		</Unit>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/views/main_window.cpp">
+			<Option target="Task2"/>
+		</Unit>
+		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/views/main_window.h">
 			<Option target="Task2"/>
 		</Unit>
 		<Unit filename="/Users/rinokus/Documents/Projects/AVSoft_test_tasks/Task2/xml_reader.h">
