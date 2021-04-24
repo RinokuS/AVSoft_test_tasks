@@ -90,7 +90,10 @@ QMenuBar* main_window::create_menu() {
 }
 
 void main_window::tree_deep_copy() {
-    this->last_tree->clear();
+    int tree_size = this->last_tree->topLevelItemCount();
+    for (int i = 0; i < tree_size; ++i)
+        delete this->last_tree->topLevelItem(0);
+    //this->last_tree->clear();
 
     for (int i = 0; i < this->tree->topLevelItemCount(); ++i)
         this->last_tree->addTopLevelItem(this->tree->topLevelItem(i)->clone());
@@ -205,7 +208,11 @@ void main_window::remove() {
 }
 
 void main_window::cancel_last_changes() {
-    this->tree->clear();
+    int tree_size = this->tree->topLevelItemCount();
+    for (int i = 0; i < tree_size; ++i)
+        delete this->tree->topLevelItem(0);
+
+    //this->tree->clear();
 
     for (int i = 0; i < this->last_tree->topLevelItemCount(); ++i)
         this->tree->addTopLevelItem(this->last_tree->topLevelItem(i)->clone());
