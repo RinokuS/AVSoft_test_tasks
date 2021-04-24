@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "main_window.h"
 #include "division_editor.h"
 #include "employee_editor.h"
@@ -16,7 +14,10 @@ main_window::main_window(QWidget *parent) : QMainWindow(parent) {
     this->tree = new QTreeWidget();
     this->tree->setColumnCount(5);
     this->tree->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
-    connect(this->tree, &QTreeWidget::itemDoubleClicked, this, &main_window::on_tree_item_double_clicked);
+
+    this->last_tree = new QTreeWidget();
+    this->last_tree->setColumnCount(5);
+    this->last_tree->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
     layout->addWidget(this->tree);
 
     this->central_widget = new QWidget();
@@ -72,16 +73,35 @@ QMenuBar* main_window::create_menu() {
     edit_menu->addSeparator();
     edit_menu->addAction(remove_act);
 
+    // changes tab
+    auto changes_menu = created_menu->addMenu(tr("Changes"));
+    auto cancel_changes_act = new QAction(tr("Cancel changes"), this);
+    cancel_changes_act->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_C);
+    cancel_changes_act->setStatusTip(tr("Cancel last changes"));
+    connect(cancel_changes_act, &QAction::triggered, this, &main_window::cancel_last_changes);
+
+    changes_menu->addAction(cancel_changes_act);
+
     created_menu->addMenu(file_menu);
     created_menu->addMenu(edit_menu);
+    created_menu->addMenu(changes_menu);
 
     return created_menu;
+}
+
+void main_window::tree_deep_copy() {
+    this->last_tree->clear();
+
+    for (int i = 0; i < this->tree->topLevelItemCount(); ++i)
+        this->last_tree->addTopLevelItem(this->tree->topLevelItem(i)->clone());
 }
 /*
  * Some trash-coding
  * I was too lazy to decompose this method, because its components used only here
  */
 void main_window::import() {
+    tree_deep_copy();
+
     QStringList file_names;
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
@@ -121,12 +141,16 @@ void main_window::import() {
 }
 
 void main_window::add_division() {
+    tree_deep_copy();
+
     division_editor dc(this->tree, true, this);
     dc.exec();
     dc.show();
 }
 
 void main_window::add_employee() {
+    tree_deep_copy();
+
     if (!this->tree->selectedItems().isEmpty() && this->tree->selectedItems()[0]->parent() == nullptr) {
         employee_editor ec(this->tree, this->tree->selectedItems()[0],
                            true, this);
@@ -138,6 +162,8 @@ void main_window::add_employee() {
 }
 
 void main_window::edit() {
+    tree_deep_copy();
+
     if (!this->tree->selectedItems().isEmpty()) {
         if (this->tree->selectedItems()[0]->parent() == nullptr) {
             division_editor dc(this->tree, false, this);
@@ -155,6 +181,8 @@ void main_window::edit() {
 }
 
 void main_window::remove() {
+    tree_deep_copy();
+
     if (!this->tree->selectedItems().isEmpty()) {
         if (this->tree->selectedItems()[0]->parent()) {
             double sal = this->tree->selectedItems()[0]->text(4).toDouble();
@@ -176,6 +204,9 @@ void main_window::remove() {
     }
 }
 
-void main_window::on_tree_item_double_clicked(QTreeWidgetItem *item, int column) {
-    this->tree->editItem(item, column);
+void main_window::cancel_last_changes() {
+    this->tree->clear();
+
+    for (int i = 0; i < this->last_tree->topLevelItemCount(); ++i)
+        this->tree->addTopLevelItem(this->last_tree->topLevelItem(i)->clone());
 }

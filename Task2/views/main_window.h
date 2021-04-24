@@ -12,10 +12,11 @@ private:
 
     QMenuBar *menu;
     QTreeWidget *tree;
+    QTreeWidget *last_tree;
     QVBoxLayout *layout;
 
     QMenuBar* create_menu();
-    void on_tree_item_double_clicked(QTreeWidgetItem *item, int column);
+    void tree_deep_copy();
 
 private slots:
     void import();
@@ -23,6 +24,7 @@ private slots:
     void add_employee();
     void edit();
     void remove();
+    void cancel_last_changes();
 
 public:
     explicit main_window(QWidget *parent = nullptr);
